@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftData
 
-@main
 public struct ControlFinanzasApp: App {
     public init() {}
     

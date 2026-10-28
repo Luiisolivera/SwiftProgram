@@ -20,20 +20,26 @@ public struct AddTransactionView: View {
     public var body: some View {
         NavigationStack {
             Form {
-                Section("Tipo de Movimiento") {
+                Section {
                     Picker("Tipo", selection: $selectedType) {
                         ForEach(TransactionType.allCases) { type in
                             Text(type.rawValue).tag(type)
                         }
                     }
                     .pickerStyle(.segmented)
+                } header: {
+                    Text("Tipo de Movimiento")
                 }
                 
-                Section("Detalles") {
+                Section {
                     TextField("Concepto (ej. Supermercado)", text: $title)
                     
+                    #if os(iOS)
                     TextField("Monto (ej. 150.00)", text: $amountText)
                         .keyboardType(.decimalPad)
+                    #else
+                    TextField("Monto (ej. 150.00)", text: $amountText)
+                    #endif
                     
                     Picker("Categoría", selection: $selectedCategory) {
                         ForEach(TransactionCategory.allCases) { category in
@@ -43,15 +49,21 @@ public struct AddTransactionView: View {
                     }
                     
                     DatePicker("Fecha", selection: $date, displayedComponents: .date)
+                } header: {
+                    Text("Detalles")
                 }
                 
-                Section("Notas (Opcional)") {
+                Section {
                     TextField("Detalles adicionales...", text: $notes, axis: .vertical)
                         .lineLimit(3...5)
+                } header: {
+                    Text("Notas (Opcional)")
                 }
             }
             .navigationTitle("Nueva Transacción")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar") { dismiss() }

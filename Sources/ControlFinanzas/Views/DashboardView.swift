@@ -45,7 +45,7 @@ public struct DashboardView: View {
                 }
                 .listRowBackground(Color.clear)
                 
-                Section("Movimientos (\(filteredTransactions.count))") {
+                Section {
                     if filteredTransactions.isEmpty {
                         ContentUnavailableView(
                             "Sin transacciones",
@@ -58,6 +58,8 @@ public struct DashboardView: View {
                         }
                         .onDelete(perform: deleteItems)
                     }
+                } header: {
+                    Text("Movimientos (\(filteredTransactions.count))")
                 }
             }
             .navigationTitle("Control de Finanzas")
